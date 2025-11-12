@@ -17,12 +17,10 @@ pipeline {
     }
     stage('Install & Test'){
       steps {
-        steps {
-          sh '''
+        sh '''
             npm install
             npm test
         '''
-          }
         }
     }
     stage('Build Docker Image'){
