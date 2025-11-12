@@ -12,7 +12,7 @@ pipeline {
 
     stage('Checkout Code'){
       steps {
-        git branch: 'main', url: 'https://github.com/achaudhary002/node-cicd-demo.git', credentialsID: "${GITHUB_CRED}"
+        git branch: 'main', url: 'https://github.com/achaudhary002/node-cicd-demo.git', credentialsId: "${GITHUB_CRED}"
       }
     }
     stage('Install & Test'){
