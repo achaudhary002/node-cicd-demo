@@ -12,20 +12,20 @@ pipeline {
 
     stage('Checkout Code'){
       steps {
-        git branch: 'main', url: 'https://github.com/achaudhary002/node-cicd-demo.git', credentialsId: "${GITHUB_CRED}"
+        git branch: 'main', url: 'https://github.com/achaudhary002/node-cicd-demo.git', credentialsId: 'github'
       }
     }
     stage('Install & Test'){
       steps {
         sh '''
-            npm install
-            npm test
+          npm install
+          npm test
         '''
         }
     }
     stage('Build Docker Image'){
       steps {
-        sh " docker build -t ${DOCKER_IMAGE}:${BUILD_NUMBER} ."
+        sh "docker build -t ${DOCKER_IMAGE}:${BUILD_NUMBER} ."
       }
     }
     stage('Push to Dockerhub'){
