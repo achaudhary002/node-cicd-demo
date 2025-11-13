@@ -6,6 +6,7 @@ pipeline {
     GITHUB_CRED = credentials('github')
     APP_NAME = "node-cicd-demo"
     DOCKER_IMAGE = "achaudhary002/${APP_NAME}"
+    K8S_NAMESPACE = 'node-cicd-demo'
   }
 
   stages {
@@ -39,11 +40,19 @@ pipeline {
         }
        }
    }
+    stage('Create Namespace'){
+      steps{
+        sh '''
+	  kubectl get ns ${K8S_NAMESPACE} || kubectl create ns ${K8S_NAMESPACE}
+	'''
+	 }
+     }
+
     stage('Deploy to the Kubernetes'){
       steps {
         sh '''
-          kubectl apply -f k8s/Deployment.yaml
-          kubectl apply -f k8s/Service.yaml
+          kubectl apply -f k8s/Deployment.yaml -n ${K8S_NAMESPACE}
+          kubectl apply -f k8s/Service.yaml  -n ${K8S_NAMESPACE}
         '''
         }
        }
